@@ -88,7 +88,7 @@ erDiagram
     Role nvarchar(20) 
   }
   Users }o--|| Employees : FK_Users_Employees_EmployeeId
-
+```
 
 ## 🏗️ How to Run the Project
 ### 📌 **Prerequisites**
