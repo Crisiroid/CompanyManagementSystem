@@ -1,4 +1,27 @@
-# Company Management System ER Diagram
+# 🏢 Company Management System
+
+## 📖 Project Overview
+The **Company Management System** is designed to manage employees, departments, projects, salaries, and attendance records within an organization. This system provides structured data management, ensuring efficient tracking of employee activities and organizational operations.
+
+## 👥 Authors
+- **Amir Sajjad Hosein Pour**  
+- **Alireza Rostami**  
+
+## 🛠️ Technologies Used
+- **ASP.NET 8** (Web API & MVC)
+- **Entity Framework Core** (Code-First Approach)
+- **SQL Server** (Database)
+- **C#** (Backend Development)
+- **Mermaid.js** (ER Diagram Visualization)
+
+## 📌 Features
+✅ **Employee Management** - Add, edit, delete, and view employee details.  
+✅ **Department Management** - Manage departments and their employees.  
+✅ **Project Assignment** - Assign employees to projects and define roles.  
+✅ **Attendance Tracking** - Track employee attendance with check-in/check-out times.  
+✅ **Salary Management** - Manage employee salaries, bonuses, and deductions.  
+✅ **User Authentication** - Secure login system with roles and hashed passwords.  
+
 
 Below is the entity-relationship diagram (ERD) for our database schema:
 
@@ -65,3 +88,50 @@ erDiagram
     Role nvarchar(20) 
   }
   Users }o--|| Employees : FK_Users_Employees_EmployeeId
+
+
+## 🏗️ How to Run the Project
+### 📌 **Prerequisites**
+1. **Visual Studio 2022** (or later)  
+2. **SQL Server 2019+**  
+3. **.NET 8 SDK**  
+4. **Entity Framework Core CLI**  
+
+### 🚀 **Installation Steps**
+1️⃣ Clone the repository:  
+   ```sh
+   git clone https://github.com/your-repo/company-management.git
+   cd company-management
+   ```
+
+2️⃣ Restore dependencies:  
+   ```sh
+   dotnet restore
+   ```
+
+3️⃣ Apply database migrations:  
+   ```sh
+   dotnet ef database update
+   ```
+
+4️⃣ Run the project:  
+   ```sh
+   dotnet run
+   ```
+
+## 🔒 User Roles
+| Role        | Description |
+|-------------|------------|
+| **Admin**   | Full access to the system |
+| **Manager** | Can manage employees and projects |
+| **Employee**| Can view personal data and attendance |
+
+## 📜 License
+This project is **open-source** under the **MIT License**.
+
+---
+
+### 🎯 **Contributions & Feedback**
+We welcome contributions! Feel free to submit issues and pull requests.  
+For any feedback, contact **Amir Sajjad Hosein Pour** or **Alireza Rostami**.  
+
