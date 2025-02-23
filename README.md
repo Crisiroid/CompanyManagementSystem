@@ -100,8 +100,8 @@ erDiagram
 ### 🚀 **Installation Steps**
 1️⃣ Clone the repository:  
    ```sh
-   git clone https://github.com/your-repo/company-management.git
-   cd company-management
+   git clone https://github.com/Crisiroid/CompanyManagementSystem.git
+   cd ComanyManagementSystem
    ```
 
 2️⃣ Restore dependencies:  
