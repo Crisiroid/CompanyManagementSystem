@@ -54,14 +54,9 @@ namespace CompanyManagement.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("UserId,EmployeeId,Username,PasswordHash,Role")] User user)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(user);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "Email", user.EmployeeId);
-            return View(user);
+            _context.Add(user);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Edit(int? id)
@@ -89,29 +84,23 @@ namespace CompanyManagement.Controllers
             {
                 return NotFound();
             }
-
-            if (ModelState.IsValid)
+            try
             {
-                try
-                {
-                    _context.Update(user);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!UserExists(user.UserId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                _context.Update(user);
+                await _context.SaveChangesAsync();
             }
-            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "Email", user.EmployeeId);
-            return View(user);
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!UserExists(user.UserId))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Delete(int? id)
