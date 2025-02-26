@@ -1,0 +1,6 @@
+Flask
+pyodbc
+numpy
+opencv-python
+dlib
+scipy
