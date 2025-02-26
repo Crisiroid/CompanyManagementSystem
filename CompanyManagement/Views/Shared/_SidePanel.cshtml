@@ -1,0 +1,81 @@
+﻿<aside class="sidebar">
+    <nav>
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link" asp-controller="Home" asp-action="Index">
+                    <i class="bi bi-house-door"></i> Dashboard
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-controller="Employees" asp-action="Index">
+                    <i class="bi bi-person"></i> Employees
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-controller="Departments" asp-action="Index">
+                    <i class="bi bi-building"></i> Departments
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-controller="Projects" asp-action="Index">
+                    <i class="bi bi-folder"></i> Projects
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-controller="AttendanceRecords" asp-action="Index">
+                    <i class="bi bi-calendar-check"></i> Attendance
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-controller="Salaries" asp-action="Index">
+                    <i class="bi bi-cash"></i> Salaries
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-controller="Users" asp-action="Index">
+                    <i class="bi bi-person-badge"></i> Users
+                </a>
+            </li>
+        </ul>
+    </nav>
+</aside>
+
+
+@section Styles {
+
+    <style>
+    body {
+        display: flex;
+        margin: 0;
+    }
+
+    .sidebar {
+        width: 250px;
+        height: 100vh;
+        position: fixed;
+        left: 0;
+        top: 0;
+        background-color: #343a40;
+        color: white;
+        padding: 10px;
+    }
+
+    .nav-link {
+        color: white;
+        padding: 10px;
+        display: block;
+    }
+
+        .nav-link:hover {
+            background-color: #495057;
+        }
+
+    /* Push content so it's not covered by sidebar */
+    .content {
+        margin-left: 250px;
+        flex-grow: 1;
+        padding: 20px;
+    }
+    </style>
+
+}

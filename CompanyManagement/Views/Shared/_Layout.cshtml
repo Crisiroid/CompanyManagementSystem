@@ -7,43 +7,143 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/CompanyManagement.styles.css" asp-append-version="true" />
+    @await RenderSectionAsync("Styles", required: false)
+    <style>
+        body {
+            background-color: #121212;
+            color: #fff;
+        }
+        .sidebar {
+            width: 280px;
+            height: 100vh;
+            background-color: #1e1e1e;
+            color: white;
+        }
+
+            .sidebar a {
+                color: white;
+            }
+
+            .sidebar .nav-link {
+                color: #fff;
+            }
+
+                .sidebar .nav-link:hover,
+                .sidebar .nav-link.active {
+                    background-color: #333;
+                    color: white;
+                }
+
+        table {
+            color: white!important;
+            border-color: white!important; 
+        }
+
+        th, td {
+            border: 1px solid white !important;
+            color: white!important;
+            padding: 10px;
+        }
+
+        thead {
+            background-color: #333;
+        }
+
+        tbody tr:hover {
+            background-color: #444;
+        }
+
+        input, textarea, select {
+            background-color: #222;
+            color: white;
+            border: 1px solid #fff;
+        }
+
+            input::placeholder, textarea::placeholder {
+                color: #bbb;
+            }
+
+        button {
+            background-color: #444;
+            color: white;
+            border: 1px solid white;
+        }
+
+            button:hover {
+                background-color: #666;
+            }
+
+        /* Footer */
+        footer {
+            background-color: #1e1e1e;
+            color: white;
+        }
+
+        /* Links */
+        a {
+            color: #4da8da; /* Light blue */
+            text-decoration: none;
+        }
+
+            a:hover {
+                color: #6fc3df;
+            }
+    </style>
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">CompanyManagement</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+
+    <div class="d-flex">
+        <!-- Sidebar -->
+        <div class="sidebar d-flex flex-column flex-shrink-0 p-3">
+            <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                <span class="fs-4">Sidebar</span>
+            </a>
+            <hr>
+            <ul class="nav nav-pills flex-column mb-auto">
+                <li class="nav-item">
+                    <a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a asp-controller="Employees" asp-action="Index" class="nav-link">Employees</a>
+                </li>
+                <li class="nav-item">
+                    <a asp-controller="Users" asp-action="Index" class="nav-link">Users</a>
+                </li>
+                <li class="nav-item">
+                    <a asp-controller="Projects" asp-action="Index" class="nav-link">Projects</a>
+                </li>
+                <li class="nav-item">
+                    <a asp-controller="Departments" asp-action="Index" class="nav-link">Departments</a>
+                </li>
+                <li class="nav-item">
+                    <a asp-controller="Attendances" asp-action="Index" class="nav-link">Attendances</a>
+                </li>
+                <li class="nav-item">
+                    <a asp-controller="Salaries" asp-action="Index" class="nav-link">Salaries</a>
+                </li>
+            </ul>
+
+            <hr>
+        </div>
+
+        <!-- Main Content -->
+        <div class="container-fluid flex-grow-1">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-muted text-center py-3">
         <div class="container">
-            &copy; 2025 - CompanyManagement - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2025 - CompanyManagement - <a asp-area="" asp-controller="Home" asp-action="Privacy" class="text-light">Privacy</a>
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+
 </body>
 </html>

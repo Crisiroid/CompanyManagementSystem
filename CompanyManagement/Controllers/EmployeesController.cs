@@ -58,6 +58,7 @@ namespace CompanyManagement.Controllers
         {
             if (ModelState.IsValid)
             {
+                if(!employee.ManagerId.HasValue) employee.ManagerId = null;
                 _context.Add(employee);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -129,6 +130,7 @@ namespace CompanyManagement.Controllers
                 .Include(e => e.Department)
                 .Include(e => e.Manager)
                 .FirstOrDefaultAsync(m => m.EmployeeId == id);
+
             if (employee == null)
             {
                 return NotFound();
@@ -141,13 +143,27 @@ namespace CompanyManagement.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var employee = await _context.Employees.FindAsync(id);
+            var employee = await _context.Employees
+                .Include(e => e.EmployeeProjects) 
+                .Include(e => e.Manager) 
+                .FirstOrDefaultAsync(e => e.EmployeeId == id);
+
             if (employee != null)
             {
+                var managedEmployees = await _context.Employees
+                    .Where(e => e.ManagerId == employee.EmployeeId)
+                    .ToListAsync();
+
+                foreach (var managedEmployee in managedEmployees)
+                {
+                    managedEmployee.ManagerId = null;
+                }
+
                 _context.Employees.Remove(employee);
             }
 
             await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
 
