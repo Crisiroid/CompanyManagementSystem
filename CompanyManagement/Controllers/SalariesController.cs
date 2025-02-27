@@ -53,14 +53,9 @@ namespace CompanyManagement.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("SalaryId,EmployeeId,BaseSalary,Bonus,Deduction,PaymentDate")] Salary salary)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(salary);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "Email", salary.EmployeeId);
-            return View(salary);
+            _context.Add(salary);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Edit(int? id)

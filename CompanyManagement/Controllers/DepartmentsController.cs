@@ -129,6 +129,14 @@ namespace CompanyManagement.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            var employees = await _context.Employees
+                   .Where(e => e.DepartmentId == id)
+                   .ToListAsync();
+            foreach (var managedEmployee in employees)
+            {
+                managedEmployee.DepartmentId = null;
+            }
+
             var department = await _context.Departments.FindAsync(id);
             if (department != null)
             {

@@ -54,14 +54,9 @@ namespace CompanyManagement.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("AttendanceId,EmployeeId,AttendanceDate,CheckInTime,CheckOutTime,Status")] Attendance attendance)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(attendance);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "Email", attendance.EmployeeId);
-            return View(attendance);
+            _context.Add(attendance);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Edit(int? id)
