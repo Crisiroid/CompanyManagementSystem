@@ -8,9 +8,13 @@ namespace CompanyManagement.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private readonly FlaskApiService _flaskApiService;
+
+        public HomeController(ILogger<HomeController> logger, FlaskApiService flaskApiService)
         {
             _logger = logger;
+            _flaskApiService = flaskApiService;
+
         }
 
         public IActionResult Index()
@@ -18,11 +22,28 @@ namespace CompanyManagement.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public async Task<IActionResult> AuthenticateUser([FromForm] IFormFile image)
         {
-            return View();
+            if (image == null)
+            {
+                return BadRequest(new { message = "Image file is required" });
+            }
+
+            var response = await _flaskApiService.AuthenticateUserAsync(image);
+            return Ok(response);
         }
 
+        [HttpPost("register")]
+        public async Task<IActionResult> RegisterUser([FromForm] string name, [FromForm] IFormFile image)
+        {
+            if (string.IsNullOrEmpty(name) || image == null)
+            {
+                return BadRequest(new { message = "Name and image are required" });
+            }
+
+            var response = await _flaskApiService.RegisterUserAsync(name, image);
+            return Ok(response);
+        }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
