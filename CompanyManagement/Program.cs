@@ -10,6 +10,7 @@ builder.Services.AddDbContext<CompanyDBContext>(option =>
 {
     option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultSQLConnection"));
 });
+builder.Services.AddHttpClient<FlaskApiService>();
 
 var app = builder.Build();
 
