@@ -1,4 +1,5 @@
 using CompanyManagement.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -17,10 +18,12 @@ namespace CompanyManagement.Controllers
 
         }
 
+        [Authorize]
         public IActionResult Index()
         {
             return View();
         }
+
 
         public async Task<IActionResult> AuthenticateUser([FromForm] IFormFile image)
         {

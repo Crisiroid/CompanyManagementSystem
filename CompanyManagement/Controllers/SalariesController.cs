@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CompanyManagement.Data;
 using CompanyManagement.Entities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CompanyManagement.Controllers
 {
@@ -19,12 +20,14 @@ namespace CompanyManagement.Controllers
             _context = context;
         }
 
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             var companyDBContext = _context.Salaries.Include(s => s.Employee);
             return View(await companyDBContext.ToListAsync());
         }
 
+        [Authorize]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -43,12 +46,14 @@ namespace CompanyManagement.Controllers
             return View(salary);
         }
 
+        [Authorize]
         public IActionResult Create()
         {
             ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "Email");
             return View();
         }
 
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("SalaryId,EmployeeId,BaseSalary,Bonus,Deduction,PaymentDate")] Salary salary)
@@ -58,6 +63,7 @@ namespace CompanyManagement.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -74,6 +80,7 @@ namespace CompanyManagement.Controllers
             return View(salary);
         }
 
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("SalaryId,EmployeeId,BaseSalary,Bonus,Deduction,PaymentDate")] Salary salary)
@@ -107,6 +114,7 @@ namespace CompanyManagement.Controllers
             return View(salary);
         }
 
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -125,6 +133,7 @@ namespace CompanyManagement.Controllers
             return View(salary);
         }
 
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

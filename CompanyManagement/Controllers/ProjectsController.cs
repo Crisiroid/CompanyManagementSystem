@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CompanyManagement.Data;
 using CompanyManagement.Entities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CompanyManagement.Controllers
 {
@@ -19,12 +20,14 @@ namespace CompanyManagement.Controllers
             _context = context;
         }
 
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             var companyDBContext = _context.Projects.Include(p => p.Department);
             return View(await companyDBContext.ToListAsync());
         }
 
+        [Authorize]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -43,12 +46,14 @@ namespace CompanyManagement.Controllers
             return View(project);
         }
 
+        [Authorize]
         public IActionResult Create()
         {
             ViewData["DepartmentId"] = new SelectList(_context.Departments, "DepartmentId", "DepartmentName");
             return View();
         }
 
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ProjectId,ProjectName,Description,StartDate,EndDate,Budget,DepartmentId")] Project project)
@@ -63,6 +68,7 @@ namespace CompanyManagement.Controllers
             return View(project);
         }
 
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -79,6 +85,7 @@ namespace CompanyManagement.Controllers
             return View(project);
         }
 
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ProjectId,ProjectName,Description,StartDate,EndDate,Budget,DepartmentId")] Project project)
@@ -112,6 +119,7 @@ namespace CompanyManagement.Controllers
             return View(project);
         }
 
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -130,6 +138,7 @@ namespace CompanyManagement.Controllers
             return View(project);
         }
 
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

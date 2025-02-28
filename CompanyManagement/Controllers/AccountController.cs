@@ -16,13 +16,12 @@ namespace CompanyManagement.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(string username, string password)
         {
-            // Validate the user (usually with a database check)
-            if (username == "admin" && password == "password") // Replace this with actual validation
+            if (username == "admin" && password == "password") 
             {
                 var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Name, username)
-            };
+                    {
+                        new Claim(ClaimTypes.Name, username)
+                    };
 
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                 var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);

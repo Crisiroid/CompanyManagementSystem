@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CompanyManagement.Data;
 using CompanyManagement.Entities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CompanyManagement.Controllers
 {
@@ -19,11 +20,13 @@ namespace CompanyManagement.Controllers
             _context = context;
         }
 
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Departments.ToListAsync());
         }
 
+        [Authorize]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -41,12 +44,13 @@ namespace CompanyManagement.Controllers
             return View(department);
         }
 
+        [Authorize]
         public IActionResult Create()
         {
             return View();
         }
 
-
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("DepartmentId,DepartmentName,Description")] Department department)
@@ -60,6 +64,7 @@ namespace CompanyManagement.Controllers
             return View(department);
         }
 
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -76,6 +81,7 @@ namespace CompanyManagement.Controllers
         }
 
 
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("DepartmentId,DepartmentName,Description")] Department department)
@@ -108,6 +114,8 @@ namespace CompanyManagement.Controllers
             return View(department);
         }
 
+
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -125,6 +133,7 @@ namespace CompanyManagement.Controllers
             return View(department);
         }
 
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

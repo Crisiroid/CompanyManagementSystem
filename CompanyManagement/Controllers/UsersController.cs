@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CompanyManagement.Data;
 using CompanyManagement.Entities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CompanyManagement.Controllers
 {
@@ -19,12 +20,14 @@ namespace CompanyManagement.Controllers
             _context = context;
         }
 
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             var companyDBContext = _context.Users.Include(u => u.Employee);
             return View(await companyDBContext.ToListAsync());
         }
 
+        [Authorize]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -43,22 +46,28 @@ namespace CompanyManagement.Controllers
             return View(user);
         }
 
+        [Authorize]
         public IActionResult Create()
         {
             ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "Email");
             return View();
         }
 
-
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("UserId,EmployeeId,Username,PasswordHash,Role")] User user)
         {
+            if (UserExists(user.EmployeeId))
+            {
+                return View();
+            }
             _context.Add(user);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -75,7 +84,7 @@ namespace CompanyManagement.Controllers
             return View(user);
         }
 
-
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("UserId,EmployeeId,Username,PasswordHash,Role")] User user)
@@ -103,6 +112,7 @@ namespace CompanyManagement.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -121,6 +131,7 @@ namespace CompanyManagement.Controllers
             return View(user);
         }
 
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -137,7 +148,7 @@ namespace CompanyManagement.Controllers
 
         private bool UserExists(int id)
         {
-            return _context.Users.Any(e => e.UserId == id);
+            return _context.Users.Any(e => e.EmployeeId == id);
         }
     }
 }

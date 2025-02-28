@@ -1,16 +1,48 @@
-﻿<form method="post" action="/Account/Login">
-    <div>
-        <label for="username">Username</label>
-        <input type="text" id="username" name="username" />
-    </div>
-    <div>
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password" />
-    </div>
-    <button type="submit">Login</button>
-</form>
-
-@if (ViewBag.ErrorMessage != null)
-{
-    <div style="color: red;">@ViewBag.ErrorMessage</div>
+﻿@{
+    Layout = null;
 }
+
+<html>
+    <head>
+    <title>Login - Company Management System</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/CompanyManagement.styles.css" asp-append-version="true" />
+</head>    
+<body>
+    <section class="vh-100" style="background-color: #508bfc;">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                    <div class="card shadow-2-strong" style="border-radius: 1rem;">
+                        <div class="card-body p-5 text-center">
+
+                            <h3 class="mb-5">Sign in</h3>
+                            <form method="post" action="/Account/Login">
+                                <div data-mdb-input-init class="form-outline mb-4">
+                                    <input id="username" name="username" class="form-control form-control-lg" />
+                                    <label class="form-label" for="username">Username</label>
+                                </div>
+
+                                <div data-mdb-input-init class="form-outline mb-4">
+                                    <input type="password" id="password" name="password" class="form-control form-control-lg" />
+                                    <label class="form-label" for="password">Password</label>
+                                </div>
+
+                                <button data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-lg btn-block" type="submit">Login</button>
+                                @if (ViewBag.ErrorMessage != null)
+                                {
+                                    <div style="color: red;">@ViewBag.ErrorMessage</div>
+                                }
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
+
+
