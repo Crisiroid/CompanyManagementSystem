@@ -9,12 +9,10 @@ namespace CompanyManagement.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        private readonly FlaskApiService _flaskApiService;
 
         public HomeController(ILogger<HomeController> logger, FlaskApiService flaskApiService)
         {
             _logger = logger;
-            _flaskApiService = flaskApiService;
 
         }
 

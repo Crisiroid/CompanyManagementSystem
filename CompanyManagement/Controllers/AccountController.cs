@@ -9,12 +9,14 @@ namespace CompanyManagement.Controllers
 {
     public class AccountController : Controller
     {
+        private readonly FlaskApiService _flaskApiService;
 
         private readonly CompanyDBContext _context;
 
-        public AccountController(CompanyDBContext context)
+        public AccountController(CompanyDBContext context, FlaskApiService flaskApiService)
         {
             _context = context;
+            _flaskApiService = flaskApiService;
         }
         public IActionResult Login()
         {
@@ -65,6 +67,21 @@ namespace CompanyManagement.Controllers
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
                 await file.CopyToAsync(stream);
+            }
+
+            var response = await _flaskApiService.AuthenticateUserAsync(file);
+            if(response.Contains("Sucess"))
+            {
+                var claims = new List<Claim>
+                    {
+                        new Claim(ClaimTypes.Name, username)
+                    };
+
+                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal);
+                return RedirectToAction("Index", "Home");
             }
 
             return Ok($"Image uploaded successfully: {file.FileName}");

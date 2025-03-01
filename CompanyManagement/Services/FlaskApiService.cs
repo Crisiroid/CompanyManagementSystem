@@ -18,10 +18,9 @@ public class FlaskApiService
     {
         using var content = new MultipartFormDataContent();
 
-        // Convert image to StreamContent
         using var stream = imageFile.OpenReadStream();
         var fileContent = new StreamContent(stream);
-        fileContent.Headers.ContentType = new MediaTypeHeaderValue("image/jpeg"); // Change if needed
+        fileContent.Headers.ContentType = new MediaTypeHeaderValue("image/jpeg");
 
         content.Add(fileContent, "image", imageFile.FileName);
 
