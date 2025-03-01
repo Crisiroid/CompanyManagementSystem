@@ -2,11 +2,20 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
+using CompanyManagement.Data;
 
 namespace CompanyManagement.Controllers
 {
     public class AccountController : Controller
     {
+
+        private readonly CompanyDBContext _context;
+
+        public AccountController(CompanyDBContext context)
+        {
+            _context = context;
+        }
         public IActionResult Login()
         {
             return View();
@@ -16,7 +25,7 @@ namespace CompanyManagement.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(string username, string password)
         {
-            if (username == "admin" && password == "password") 
+            if (UserExists(username, password)) 
             {
                 var claims = new List<Claim>
                     {
@@ -34,7 +43,6 @@ namespace CompanyManagement.Controllers
             return View();
         }
 
-        // Logout action
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
@@ -46,6 +54,11 @@ namespace CompanyManagement.Controllers
         {
             return View();
 
+        }
+
+        private bool UserExists(string Username, string Password)
+        {
+            return _context.Users.Any(e => e.Username == Username && e.PasswordHash == Password);
         }
     }
 }
