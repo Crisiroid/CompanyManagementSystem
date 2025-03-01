@@ -2,12 +2,12 @@
 import os
 
 DB_CONFIG = {
-    "server": "YOUR_SQL_SERVER",
-    "database": "YOUR_DATABASE",
-    "username": "YOUR_USERNAME",
-    "password": "YOUR_PASSWORD",
-    "driver": "ODBC Driver 17 for SQL Server"
+    "server": "localhost",
+    "database": "ComapnyManagementDB",
+    "driver": "ODBC Driver 17 for SQL Server",
+    "trusted_connection": "yes"
 }
+
 
 MODEL_PATHS = {
     "prototxt": "models/deploy.prototxt",

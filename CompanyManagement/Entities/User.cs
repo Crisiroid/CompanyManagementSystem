@@ -18,7 +18,10 @@ namespace CompanyManagement.Entities
         public string PasswordHash { get; set; } = string.Empty;
 
         [Required, MaxLength(20)]
-        public string Role { get; set; } = "Employee"; // Admin, Employee, HR
+        public string Role { get; set; } = "Employee";
+
+
+        public string Face_model { get; set; }
     }
 
 }

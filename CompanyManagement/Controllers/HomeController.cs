@@ -23,28 +23,19 @@ namespace CompanyManagement.Controllers
         }
 
 
-        public async Task<IActionResult> AuthenticateUser([FromForm] IFormFile image)
-        {
-            if (image == null)
-            {
-                return BadRequest(new { message = "Image file is required" });
-            }
+       
 
-            var response = await _flaskApiService.AuthenticateUserAsync(image);
-            return Ok(response);
-        }
+        //[HttpPost("register")]
+        //public async Task<IActionResult> RegisterUser([FromForm] string name, [FromForm] IFormFile image)
+        //{
+        //    if (string.IsNullOrEmpty(name) || image == null)
+        //    {
+        //        return BadRequest(new { message = "Name and image are required" });
+        //    }
 
-        [HttpPost("register")]
-        public async Task<IActionResult> RegisterUser([FromForm] string name, [FromForm] IFormFile image)
-        {
-            if (string.IsNullOrEmpty(name) || image == null)
-            {
-                return BadRequest(new { message = "Name and image are required" });
-            }
-
-            var response = await _flaskApiService.RegisterUserAsync(name, image);
-            return Ok(response);
-        }
+        //    var response = await _flaskApiService.RegisterUserAsync(name, image);
+        //    return Ok(response);
+        //}
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
