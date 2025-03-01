@@ -22,6 +22,33 @@ The **Company Management System** is designed to manage employees, departments, 
 ✅ **Salary Management** - Manage employee salaries, bonuses, and deductions.  
 ✅ **User Authentication** - Secure login system with roles and hashed passwords.  
 
+## Relationship Details
+
+### 1️⃣ One-to-Many (1:N) Relationships
+- Employees → Departments (`1 Department` has `N Employees`)
+  - Each employee belongs to one department, but a department can have multiple employees.
+- Employees → AttendanceRecords (`1 Employee` has `N AttendanceRecords`)
+  - Each attendance record is linked to one employee, but an employee can have multiple attendance records over time.
+- Employees → Salaries (`1 Employee` has `N Salaries`)
+  - Employees receive multiple salary payments over time.
+- Projects → Departments (`1 Department` has `N Projects`)
+  - Each project is managed by one department, but a department can have multiple projects.
+
+### 2️⃣ One-to-One (1:1) Relationships
+- Employees → Users (`1 Employee` has `1 User account`)
+  - Each employee has a corresponding system user account.
+
+### 3️⃣ Many-to-Many (M:N) Relationships
+- Employees ↔ EmployeeProjects ↔ Projects
+  - An employee can be assigned to multiple projects.
+  - A project can have multiple employees working on it.
+  - This is handled through the **EmployeeProjects** junction table.
+- Employees → Employees (Self-Referencing)
+  - Each employee can have a **manager**, meaning an employee can supervise other employees in a hierarchical structure.
+
+---
+
+### Summary Table
 
 Below is the entity-relationship diagram (ERD) for our database schema:
 
