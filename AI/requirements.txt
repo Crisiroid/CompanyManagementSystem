@@ -1,6 +1,5 @@
 Flask
-pyodbc
-numpy
 opencv-python
+numpy
+pyodbc
 dlib
-scipy
