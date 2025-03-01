@@ -36,12 +36,70 @@
                                 }
                             </form>
 
+
+                            <video id="video" width="320" height="240" autoplay></video>
+                            <button id="capture">Capture</button>
+                            <canvas id="canvas" style="display: none;"></canvas>
+                            <form id="uploadForm" enctype="multipart/form-data">
+                                <input type="file" id="fileInput" name="file" accept="image/*" style="display: none;">
+                                <button type="submit">Upload</button>
+                            </form>
+                            <img id="preview" width="320" height="240" />
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+    
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const video = document.getElementById("video");
+            const captureButton = document.getElementById("capture");
+            const canvas = document.getElementById("canvas");
+            const fileInput = document.getElementById("fileInput");
+            const preview = document.getElementById("preview");
+
+            // Request camera access
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(stream => {
+                    video.srcObject = stream;
+                })
+                .catch(err => console.error("Error accessing camera:", err));
+
+            captureButton.addEventListener("click", () => {
+                const context = canvas.getContext("2d");
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                context.drawImage(video, 0, 0, canvas.width, canvas.height);
+                canvas.toBlob(blob => {
+                    const file = new File([blob], "user-image.png", { type: "image/png" });
+                    const dataTransfer = new DataTransfer();
+                    dataTransfer.items.add(file);
+                    fileInput.files = dataTransfer.files;
+                    preview.src = URL.createObjectURL(file);
+                }, "image/png");
+            });
+
+            // Upload Image
+            document.getElementById("uploadForm").addEventListener("submit", async (e) => {
+                e.preventDefault();
+                const formData = new FormData();
+                formData.append("file", fileInput.files[0]);
+
+                const response = await fetch("/User/UploadImage", {
+                    method: "POST",
+                    body: formData
+                });
+
+                const result = await response.text();
+                alert(result);
+            });
+        });
+    </script>
 </body>
 </html>
 

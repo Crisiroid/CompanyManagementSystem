@@ -49,6 +49,27 @@ namespace CompanyManagement.Controllers
             return RedirectToAction("Login");
         }
 
+        [HttpPost]
+        [Route("User/UploadImage")]
+        public async Task<IActionResult> UploadImage(IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+            {
+                return BadRequest("No file uploaded.");
+            }
+
+            var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads");
+            Directory.CreateDirectory(uploadsFolder);
+            var filePath = Path.Combine(uploadsFolder, file.FileName);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+            return Ok($"Image uploaded successfully: {file.FileName}");
+        }
+
 
         public IActionResult AccessDenied()
         {
