@@ -74,7 +74,7 @@ namespace CompanyManagement.Controllers
             {
                 var claims = new List<Claim>
                     {
-                        new Claim(ClaimTypes.Name, username)
+                        new Claim(ClaimTypes.Name, "admin")
                     };
 
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
